@@ -18,6 +18,10 @@ Function that converts text to speech and saves the audio file to the specified 
 
 @param {number} similarityBoost - The similarity boost setting for the voice.
 
+@param {number} style - The style setting for the voice.
+
+@param {boolean} speakerBoost - The speaker boost setting for the voice.
+
 @param {string} modelId - The model to use for the text-to-speech conversion. If null, it will use elevenlab's default model.
 
 @returns {Object} - An object containing the status of the operation.
@@ -29,6 +33,8 @@ const textToSpeech = async (
   textInput,
   stability,
   similarityBoost,
+  style,
+  speakerBoost,
   modelId
 ) => {
   try {
@@ -39,6 +45,8 @@ const textToSpeech = async (
     const voiceURL = `${elevenLabsAPI}/text-to-speech/${voiceID}`;
     const stabilityValue = stability ? stability : 0;
     const similarityBoostValue = similarityBoost ? similarityBoost : 0;
+    const styleValue = style ? style : 0;
+    const speakerBoostValue = speakerBoost ? speakerBoost : true;
 
     const response = await axios({
       method: "POST",
@@ -48,6 +56,8 @@ const textToSpeech = async (
         voice_settings: {
           stability: stabilityValue,
           similarity_boost: similarityBoostValue,
+          style: styleValue,
+          use_speaker_boost: speakerBoostValue
         },
         model_id: modelId ? modelId : undefined,
       },
@@ -83,6 +93,10 @@ Function that converts text to speech and returns a readable stream of the audio
 
 @param {number} similarityBoost - The similarity boost setting for the voice.
 
+@param {number} style  - The style setting for the voice.
+
+@param {boolean} speakerBoost - The speaker boost setting for the voice.
+
 @param {string} modelId - The model to use for the text-to-speech conversion. If null, it will use elevenlab's default model.
 
 @returns {Object} - A readable stream of the audio data.
@@ -93,6 +107,8 @@ const textToSpeechStream = async (
   textInput,
   stability,
   similarityBoost,
+  style,
+  speakerBoost,
   modelId
 ) => {
   try {
@@ -103,6 +119,8 @@ const textToSpeechStream = async (
     const voiceURL = `${elevenLabsAPI}/text-to-speech/${voiceID}/stream`;
     const stabilityValue = stability ? stability : 0;
     const similarityBoostValue = similarityBoost ? similarityBoost : 0;
+    const styleValue = style ? style : 0;
+    const speakerBoostValue = speakerBoost ? speakerBoost : true;
 
     const response = await axios({
       method: "POST",
@@ -112,6 +130,8 @@ const textToSpeechStream = async (
         voice_settings: {
           stability: stabilityValue,
           similarity_boost: similarityBoostValue,
+          style: styleValue,
+          use_speaker_boost: speakerBoostValue
         },
         model_id: modelId ? modelId : undefined,
       },
