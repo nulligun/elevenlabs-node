@@ -48,17 +48,22 @@ const textToSpeech = async (
     const styleValue = style ? style : 0;
     const speakerBoostValue = speakerBoost ? speakerBoost : true;
 
+    const voice_settings = {
+      stability: stabilityValue,
+      similarity_boost: similarityBoostValue
+    };
+
+    if (modelId !== "eleven_monolingual_v1") {
+        voice_settings.style = styleValue;
+        voice_settings.use_speaker_boost = speakerBoostValue;
+    }
+
     const response = await axios({
       method: "POST",
       url: voiceURL,
       data: {
         text: textInput,
-        voice_settings: {
-          stability: stabilityValue,
-          similarity_boost: similarityBoostValue,
-          style: styleValue,
-          use_speaker_boost: speakerBoostValue
-        },
+        voice_settings,
         model_id: modelId ? modelId : undefined,
       },
       headers: {
@@ -122,17 +127,22 @@ const textToSpeechStream = async (
     const styleValue = style ? style : 0;
     const speakerBoostValue = speakerBoost ? speakerBoost : true;
 
+    const voice_settings = {
+      stability: stabilityValue,
+      similarity_boost: similarityBoostValue
+    };
+
+    if (modelId !== "eleven_monolingual_v1") {
+      voice_settings.style = styleValue;
+      voice_settings.use_speaker_boost = speakerBoostValue;
+    }
+
     const response = await axios({
       method: "POST",
       url: voiceURL,
       data: {
         text: textInput,
-        voice_settings: {
-          stability: stabilityValue,
-          similarity_boost: similarityBoostValue,
-          style: styleValue,
-          use_speaker_boost: speakerBoostValue
-        },
+        voice_settings,
         model_id: modelId ? modelId : undefined,
       },
       headers: {
