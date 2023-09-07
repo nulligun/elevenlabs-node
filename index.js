@@ -121,7 +121,7 @@ const textToSpeechStream = async (
       console.log("ERR: Missing parameter");
     }
 
-    const voiceURL = `${elevenLabsAPI}/text-to-speech/${voiceID}/stream`;
+    const voiceURL = `${elevenLabsAPI}/text-to-speech/${voiceID}/stream?output_format=pcm_44100`;
     const stabilityValue = stability ? stability : 0;
     const similarityBoostValue = similarityBoost ? similarityBoost : 0;
     const styleValue = style ? style : 0;
